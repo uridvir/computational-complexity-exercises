@@ -64,6 +64,15 @@ We know from analysis that $\log(n)/n$ will approach 0 as $n$ goes to infinity, 
 \begin{enumerate}
 \item{
 % f(n) = f(n − 1) + 10
+Let $g(n) = n$. We can define a constant $C$ to account for the base case and write
+$$
+f(n) = 10n + C
+$$
+Thus for $n \geq C$,
+$$
+10n + n \leq 10n + C \Rightarrow n \leq \frac{g(n)}{11} \Rightarrow f = O(g)
+$$
+Since $g$ is strictly less than $f$ for $n$ outside the base case, we also have $g = O(f)$ and thus $f(n) = \Theta(g(n))$. 
 }
 \end{enumerate}
 
