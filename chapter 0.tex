@@ -9,12 +9,32 @@
 
 \newcommand{\qed}{\null \hfill $\square$}
 
-\renewcommand{\labelenumi}{(\roman{enumi}).}
+\renewcommand{\labelenumi}{(\alph{enumi})}
 
 \begin{document}
 
 \maketitle
 
 \section*{Exercise 1}
+% For each of the following pairs of functions f , g determine whether f = o(g), g = o(f)
+%or f = O(g). If f = o(g) then find the first number n such that f(n) < g(n):
+
+\begin{enumerate}
+\item{
+% f(n) = n^2, g(n) = 2n^2 + 100 sqrt(n)
+$f = O(g)$ since $f(n) < g(n)$ for all $n$, and thus for any sufficiently large $n$ (any $n$ at all) we have $n^2 < 2n^2 + 100\sqrt{n} \Rightarrow f(n) \leq c \cdot g(n)$ with $c = 1$.
+
+\noindent
+While it may be obvious that neither $f = o(g)$ nor $g = o(f)$ are true in this case, I'll prove it for completeness.
+\begin{itemize}
+\item{Suppose $f = o(g)$. Consider $\epsilon = 0.01$. Thus
+$$
+n^2 \leq 0.02n^2 + \sqrt{n} \Rightarrow 0.98 \leq \sqrt{n}/n^2
+$$
+This fails for even small $n$ (such as $n=2$). So $f \neq o(g)$.}
+\item{Clearly $g \neq o(f)$ since $f$ is strictly less than $g$ so even $\epsilon = 1$ fails.}
+\end{itemize}
+}
+\end{enumerate}
 
 \end{document}
