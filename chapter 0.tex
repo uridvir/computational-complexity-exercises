@@ -11,6 +11,8 @@
 
 \renewcommand{\labelenumi}{(\alph{enumi})}
 
+\newcommand{\Unit}[1]{\,\text{#1} \,}
+
 \begin{document}
 
 \maketitle
@@ -50,5 +52,27 @@ $$
 We know from analysis that $\log(n)/n$ will approach 0 as $n$ goes to infinity, so the left-hand side must also approach 0. Thus sufficiently large $n$ will indeed satisfy the condition such that $f = o(g)$. The first $n$ that satisfies $f(n) < g(n)$ is $n=0$.
 }
 \end{enumerate}
+
+\section*{Exercise 2}
+%For each of the following recursively defined functions f , finda closed(nonrecursive)
+%expression for a function g such that f (n) = Theta(g(n)), andprove that this is the case.
+%(Note: Below we only supply the recursive rule, you can assume that f (1) = f (2) =
+%· · · = f (10) = 1 andthe recursive rule is appliedfor n > 10; in any case, regardless
+%of how the base case is defined it won’t make any difference to the answer. Can you
+%see why?)
+
+\begin{enumerate}
+\item{
+% f(n) = f(n − 1) + 10
+}
+\end{enumerate}
+
+\section*{Exercise 3}
+
+Given the astronomical timescale it would take for the last gear to make a full rotation, whatever small movement it has made since it was constructed is well within the elasticity of concrete. In fact, 10 centimeters from the axle on the last gear, the arclength over 100 years of operation is
+$$
+\frac{212 \Unit{rpm}}{50^{13} \Unit{rev}} \times 100 \Unit{years} \times 10 \Unit{cm} \approx 108 \Unit{proton radii} 
+$$
+Concrete will not break from such a small deformation.
 
 \end{document}
