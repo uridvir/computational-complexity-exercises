@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 
 \title{Chapter \#0}
-\author{Uri Dvir \\ Computational Complexity - A Modern Approach}
+\author{Uri Dvir \\ Computational Complexity - A Modern Approach (2016 ed.)}
 \date{completed December 22, 2023}
 
 \usepackage{amssymb}
@@ -34,6 +34,20 @@ $$
 This fails for even small $n$ (such as $n=2$). So $f \neq o(g)$.}
 \item{Clearly $g \neq o(f)$ since $f$ is strictly less than $g$ so even $\epsilon = 1$ fails.}
 \end{itemize}
+}
+\item{
+% f(n) = n^100, g(n) = 2^(n/100)
+We can write $g(n) = (2^{0.01})^n$. We will show that $f = o(g)$. Let $\epsilon > 0$ and let $c = 2^{0.01}$. We will show that sufficiently large $n$ can satisfy
+$$
+n^{100} \leq \epsilon c^n
+$$
+Taking the logarithm gives
+$$
+100 \log n \leq \log \epsilon + n \log c
+\Rightarrow
+\frac{\log n - 0.01 \log \epsilon}{n} \leq 0.01\log c
+$$
+We know from analysis that $\log(n)/n$ will approach 0 as $n$ goes to infinity, so the left-hand side must also approach 0. Thus sufficiently large $n$ will indeed satisfy the condition such that $f = o(g)$. The first $n$ that satisfies $f(n) < g(n)$ is $n=0$.
 }
 \end{enumerate}
 
