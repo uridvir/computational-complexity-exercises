@@ -8,7 +8,7 @@
 
 \newcommand{\qed}{\null \hfill $\square$}
 
-\renewcommand{\labelenumi}{(\roman{enumi}).}
+\renewcommand{\labelenumi}{(\arabic{enumi}).}
 
 \newcommand{\Unit}[1]{\,\text{#1} \,}
 
@@ -28,7 +28,10 @@ A Turing machine (TM) with $k \geq 2$ tapes is defined as a tuple $(\Gamma, Q, \
 \end{enumerate}
 The TM's first tape is its input, which is read-only. Having three tapes, one for input, one for work, and one for output, is pretty common.
 }
-
+\item{A TM computes a function $f$ if, given $x$ as input, it always has $f(x)$ on its output tape when it halts. It computes in $T$-time if the computation on $x$ requires at most $T(|x|)$ steps.}
+\item{
+A function $T \,:\, \mathbb{N} \rightarrow \mathbb{N}$ is time-constructible if $T(n) \geq n$ and there exists a Turing machine $M$ which computes $x \rightarrow T(|x|)$ in $T$-time. Basically, is there a Turing machine which computes its own $T$-time, in $T$-time? TODO: Update this definition when I get better intuition for it.
+}
 \end{enumerate}
 
 \end{document}
