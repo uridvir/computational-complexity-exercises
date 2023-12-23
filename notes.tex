@@ -1,0 +1,34 @@
+\documentclass[12pt]{article}
+
+\title{Notes}
+\author{Uri Dvir \\ Computational Complexity - A Modern Approach (2016 ed.)}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\newcommand{\qed}{\null \hfill $\square$}
+
+\renewcommand{\labelenumi}{(\roman{enumi}).}
+
+\newcommand{\Unit}[1]{\,\text{#1} \,}
+
+\begin{document}
+
+\maketitle
+
+\section*{Chapter 1}
+
+\begin{enumerate}
+\item{
+A Turing machine (TM) with $k \geq 2$ tapes is defined as a tuple $(\Gamma, Q, \delta)$ where
+\begin{enumerate}
+\item{$\Gamma$ is a finite set of symbols, the alphabet of the machine. $\Gamma$ contains two special symbols, a start symbol $\triangleright$ and a blank symbol $\square$, as well as the normal ones like 0 and 1.}
+\item{$Q$ is the set of states. There are two special states, the start state $q_{start}$ and the halt state $q_{halt}$.}
+\item{$\delta \,:\, Q \times \Gamma^k \rightarrow Q \times \Gamma^{k-1} \times \{ L, S, R \}^k$ is the transition function. The TM reads the value under each tape head and then, depending on the state, writes to the writeable tapes, and then moves each tape head left, right, or not at all. The machine ends up in a new state. The transition function $\delta$ describes precisely how the TM does this for every configuration.}
+\end{enumerate}
+The TM's first tape is its input, which is read-only. Having three tapes, one for input, one for work, and one for output, is pretty common.
+}
+
+\end{enumerate}
+
+\end{document}
