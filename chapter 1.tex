@@ -10,11 +10,29 @@
 \newcommand{\qed}{\null \hfill $\square$}
 
 \renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\labelenumii}{\arabic{enumii}.}
 
 \newcommand{\Unit}[1]{\,\text{#1} \,}
 
 \begin{document}
 
 \maketitle
+
+\section*{Exercise 1}
+
+\begin{enumerate}
+\item{
+To compute the addition function, we will describe a Turing machine with 1 input tape, 3 work tapes, and one output tape. The input $\langle x, y \rangle$ is encoded with deliminator $\#$ by $0 \rightarrow 00$, $1 \rightarrow 11$, $\# \rightarrow 01$.
+\begin{enumerate}
+\item{Seek right on the input tape until we arrive at the first $\square$.}
+\item{Copy $y$ backwards to work tape 1.}
+\item{Copy $x$ backwards to work tape 2.}
+\item{Seek left on work tapes 1 and 2 until we arrive at $\triangleright$ on both.}
+\item{Until both work tapes 1 and 2 read $\square$ and there is no carry, go to the next step. Otherwise, skip the next step.}
+\item{Add the bits from work tape 1 and work tape 2 together (treating $\square$ as 0), write the result to work tape 3, and set the carry appropriately. Seek right on all three tapes and repeat the previous step.}
+\item{Copy work tape 3 backwards to output and halt.}
+\end{enumerate}
+}
+\end{enumerate}
 
 \end{document}
