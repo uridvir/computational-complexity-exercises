@@ -43,7 +43,7 @@ For the multiplication function, we will have 4 work tapes. These are $\tau_x$, 
 \item{Seek to $\triangleright$ on $\tau_x$ and $\tau_y$, then seek right on $\tau_x$.}
 \item{Add the bits of $\tau_{count}$ (leading zeros) to $\tau_{sum}$ and then seek to $\triangleright$ for $\tau_{count}$ but not for $\tau_{sum}$.}
 \item{If $\tau_x$ reads 1, add the bits of $\tau_y$ to $\tau_{sum}$, directly after the leading zeros added in the last step.}
-\item{Seek right on $\tau_x$, and skip to step 9 if we read $\square$.}
+\item{Seek right on $\tau_x$, and skip to step 10 if we read $\square$.}
 \item{Seek right to $\square$, write 0, then seek to $\triangleright$ on $\tau_{count}$.}
 \item{Seek to $\triangleright$ for $\tau_{sum}$ and repeat step 5.}
 \item{Seek right to $\square$ on $\tau_{sum}$ then copy $\tau_{sum}$ backwards to output, and halt.}
