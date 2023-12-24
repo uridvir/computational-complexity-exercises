@@ -51,4 +51,21 @@ For the multiplication function, we will have 4 work tapes. These are $\tau_x$, 
 }
 \end{enumerate}
 
+\section*{Exercise 2}
+
+%Complete the proof of Claim 1.5 by writing down explicitly the description of the
+% machine ˜M.
+Every state in the machine $M$ maps to some set of states in $\tilde{M}$.
+To simulate reading a symbol from $\Gamma$, $\tilde{M}$ reads $\log|\Gamma|$ bits. Let's implement this with a binary tree! Let the set of states in the tree be $T_\Gamma$. The tree will have $\log|\Gamma|$ layers, and so we have
+$$|T_\Gamma| = 2^{\lceil\log|\Gamma|\rceil} - 1$$
+Each node represents a prefix, such as 001, that has been read already. Transitions down the tree will seek while reading more bits, while transitions from leaf nodes go to other trees. For example, reading the letter ``m" like in the textbook might look like this:
+$$
+q_{start, \epsilon} \rightarrow q_{start,0} \rightarrow q_{start,01} \rightarrow q_{start,011} \rightarrow q_{start,0110} \rightarrow q_{next,\epsilon}
+$$
+Reading the last 1 sends us to the next state, rather than to a 01101 state. This example also illustrates how we can have multiple trees for each state. We can express the new states as a product,
+$$
+Q' = Q \times T_\Gamma
+$$
+Starting from here (and also accounting for writes), we can now start formally describing the new transition function $\delta'$.
+
 \end{document}
