@@ -55,18 +55,18 @@ For the multiplication function, we will have 4 work tapes. These are $\tau_x$, 
 
 %Complete the proof of Claim 1.5 by writing down explicitly the description of the
 % machine ˜M.
-To simulate $M$, the machine $\tilde{M}$ will (1) read $\log|\Gamma|$ symbols from the tapes (seeking right), (2) write $\log|\Gamma|$ symbols to the tapes (seeking left), and then (3) seek left or right by $\log|\Gamma|$ positions, or not at all, on each tape. This will take $3\log|\Gamma|$ steps, which is within $4\log|\Gamma|$ steps. 
+To simulate $M$, the machine $\tilde{M}$ will (1) read $\log|\Gamma|$ symbols from the tapes (seeking right), (2) write $\log|\Gamma|$ symbols to the tapes (seeking left), and then (3) seek left or right by $\log|\Gamma|$ positions, or not at all, on each tape. This will take $3\log|\Gamma|$ steps, which is within $4\log|\Gamma|$ steps. After the seek phase, we go back to the read phase.
 \begin{itemize}
 \item{To read $\log|\Gamma|$ symbols, we descend down a binary tree $R$ of states. Each state $r_s$ corresponds to a prefix bit-string $s$. When we read a symbol $\tilde{\sigma} \in \{0,1\}$ in state $r_s$, we enter a new state $r_{s\tilde{\sigma}}$. Since we have $k$ tapes, we have $k$ trees represented by the product $R^k$.}
-\item{To write $\log|\Gamma|$ symbols to $k$ tapes, we have a sequence of states for every symbol $\sigma \in \Gamma$ we just read, represented by $\Gamma^k \times \mathbb{Z}_{\log|\Gamma|}$.}
-\item{The seeking states have the same structure as those for writes, $\Gamma^k \times \mathbb{Z}_{\log|\Gamma|}$.}
+\item{To write $\log|\Gamma|$ symbols to $k$ tapes, we have a sequence of states for every symbol $\sigma \in \Gamma$ we just read, represented by $\Gamma^k \times \mathbb{N}_{\log|\Gamma|}$.}
+\item{The seeking states have the same structure as those for writes, $\Gamma^k \times \mathbb{N}_{\log|\Gamma|}$.}
 \end{itemize}
 The behavior of each read, write, or seek state of $\tilde{M}$ is also determined by the active state $q$ of $M$. Therefore we can write
 $$
 \tilde{Q} = Q \times \left(
 (\textsf{READ}, R^k) \cup
-(\textsf{WRITE}, \Gamma^k \times \mathbb{Z}_{\log|\Gamma|}) \cup
-(\textsf{SEEK}, \Gamma^k \times \mathbb{Z}_{\log|\Gamma|})
+(\textsf{WRITE}, \Gamma^k \times \mathbb{N}_{\log|\Gamma|}) \cup
+(\textsf{SEEK}, \Gamma^k \times \mathbb{N}_{\log|\Gamma|})
 \right)
 $$
 We can now write a transition function for $\tilde{M}$. Given an encoding function $\textsf{enc} \,:\, \Gamma \rightarrow \{0,1\}^{\log|\Gamma|}$,
