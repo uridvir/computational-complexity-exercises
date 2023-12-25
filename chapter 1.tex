@@ -55,13 +55,41 @@ For the multiplication function, we will have 4 work tapes. These are $\tau_x$, 
 
 %Complete the proof of Claim 1.5 by writing down explicitly the description of the
 % machine ˜M.
-Every state in the machine $M$ maps to some set of states in $\tilde{M}$.
-To simulate reading a symbol from $\Gamma$, $\tilde{M}$ reads $\log|\Gamma|$ bits. Let's implement this with a binary tree! Let the set of states in the tree be $T_\Gamma$. The tree will have $\log|\Gamma|$ layers, and so we have
-$$|T_\Gamma| = 2^{\lceil\log|\Gamma|\rceil} - 1$$
-Each node represents a prefix, such as 001, that has been read already. Transitions down the tree will seek while reading more bits, while transitions from leaf nodes go to other trees. For example, reading the letter ``m" (encoded 01101) like in the textbook might look like this:
+To simulate $M$, the machine $\tilde{M}$ will (1) read $\log|\Gamma|$ symbols from the tapes (seeking right), (2) write $\log|\Gamma|$ symbols to the tapes (seeking left), and then (3) seek left or right by $\log|\Gamma|$ positions, or not at all, on each tape. This will take $3\log|\Gamma|$ steps, which is within $4\log|\Gamma|$ steps. 
+\begin{itemize}
+\item{To read $\log|\Gamma|$ symbols, we descend down a binary tree $R$ of states. Each state $r_s$ corresponds to a prefix bit-string $s$. When we read a symbol $\tilde{\sigma} \in \{0,1\}$ in state $r_s$, we enter a new state $r_{s\tilde{\sigma}}$. Since we have $k$ tapes, we have $k$ trees represented by the product $R^k$.}
+\item{To write $\log|\Gamma|$ symbols to $k$ tapes, we have a sequence of states for every symbol $\sigma \in \Gamma$ we just read, represented by $\Gamma^k \times \mathbb{Z}_{\log|\Gamma|}$.}
+\item{The seeking states have the same structure as those for writes, $\Gamma^k \times \mathbb{Z}_{\log|\Gamma|}$.}
+\end{itemize}
+The behavior of each read, write, or seek state of $\tilde{M}$ is also determined by the active state $q$ of $M$. Therefore we can write
 $$
-q_{start, \epsilon} \rightarrow q_{start,0} \rightarrow q_{start,01} \rightarrow q_{start,011} \rightarrow q_{start,0110} \rightarrow q_{next,\epsilon}
+\tilde{Q} = Q \times \left(
+(\textsf{READ}, R^k) \cup
+(\textsf{WRITE}, \Gamma^k \times \mathbb{Z}_{\log|\Gamma|}) \cup
+(\textsf{SEEK}, \Gamma^k \times \mathbb{Z}_{\log|\Gamma|})
+\right)
 $$
-Reading the last 1 sends us to the next state, rather than to a 01101 state. This example also illustrates how we can have multiple trees for each state. So the reading states are $Q \times T_\Gamma$.
+We can now write a transition function for $\tilde{M}$. Given an encoding function $\textsf{enc} \,:\, \Gamma \rightarrow \{0,1\}^{\log|\Gamma|}$,
+\begin{multline*}
+\tilde{\delta}
+((q, \textsf{READ}, (r_{s}, ...)), \tilde{\sigma}) = \\
+\begin{cases}
+(q, \textsf{READ}, (r_{s\tilde{\sigma}}, ...)), \tilde{\sigma}, \textsf{R} &
+\text{if } |s\tilde{\sigma}| < \log|\Gamma| \\
+(q, \textsf{WRITE}, \textsf{enc}^{-1}((s\tilde{\sigma}, ...), \log|\Gamma|), \tilde{\sigma}, \textsf{S} &
+\text{if } |s\tilde{\sigma}| = \log|\Gamma|
+\end{cases}
+\end{multline*}
+\begin{multline*}
+\tilde{\delta}
+((q, \textsf{WRITE}, (\sigma_i), j), \tilde{\sigma}) = \\
+\begin{cases}
+(q, \textsf{WRITE}, (\sigma_i), j-1), \{ \textsf{enc}(\sigma')_j \,;\, \sigma' \in \delta(q,(\sigma_i))_2 \}, \textsf{L} &
+\text{if } j > 0 \\
+(q, \textsf{SEEK}, (\sigma_i), \log|\Gamma|), \{ \textsf{enc}(\sigma')_1 \,;\, \sigma' \in \delta(q,(\sigma_i))_2 \}, \textsf{S} &
+\text{if } j = 1
+\end{cases}
+\end{multline*}
+TODO: Define the seek case.
 
 \end{document}
