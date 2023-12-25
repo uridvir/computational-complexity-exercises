@@ -74,9 +74,9 @@ We can now write a transition function for $\tilde{M}$. Given an encoding functi
 \tilde{\delta}
 ((q, \textsf{READ}, (r_{s}, ...)), \tilde{\sigma}) = \\
 \begin{cases}
-(q, \textsf{READ}, (r_{s\tilde{\sigma}}, ...)), \tilde{\sigma}, \textsf{R} &
+(q, \textsf{READ}, (r_{s\tilde{\sigma}}, ...)), \tilde{\sigma}, \textsf{R}^k &
 \text{if } |s\tilde{\sigma}| < \log|\Gamma| \\
-(q, \textsf{WRITE}, \textsf{enc}^{-1}((s\tilde{\sigma}, ...), \log|\Gamma|), \tilde{\sigma}, \textsf{S} &
+(q, \textsf{WRITE}, \textsf{enc}^{-1}((s\tilde{\sigma}, ...), \log|\Gamma|), \tilde{\sigma}, \textsf{S}^k &
 \text{if } |s\tilde{\sigma}| = \log|\Gamma|
 \end{cases}
 \end{multline*}
@@ -84,12 +84,21 @@ We can now write a transition function for $\tilde{M}$. Given an encoding functi
 \tilde{\delta}
 ((q, \textsf{WRITE}, (\sigma_i), j), \tilde{\sigma}) = \\
 \begin{cases}
-(q, \textsf{WRITE}, (\sigma_i), j-1), \{ \textsf{enc}(\sigma')_j \,;\, \sigma' \in \delta(q,(\sigma_i))_2 \}, \textsf{L} &
-\text{if } j > 0 \\
-(q, \textsf{SEEK}, (\sigma_i), \log|\Gamma|), \{ \textsf{enc}(\sigma')_1 \,;\, \sigma' \in \delta(q,(\sigma_i))_2 \}, \textsf{S} &
+(q, \textsf{WRITE}, (\sigma_i), j-1), \{ \textsf{enc}(\sigma')_j \,;\, \sigma' \in \delta(q,(\sigma_i))_2 \}, \textsf{L}^k &
+\text{if } j > 1 \\
+(q, \textsf{SEEK}, (\sigma_i), \log|\Gamma|), \{ \textsf{enc}(\sigma')_1 \,;\, \sigma' \in \delta(q,(\sigma_i))_2 \}, \textsf{S}^k &
 \text{if } j = 1
 \end{cases}
 \end{multline*}
-TODO: Define the seek case.
+\begin{multline*}
+\tilde{\delta}
+((q, \textsf{SEEK}, (\sigma_i), j), \tilde{\sigma}) =
+\begin{cases}
+(q, \textsf{SEEK}, (\sigma_i), j-1),  \tilde{\sigma}, \delta(q,(\sigma_i))_3 &
+\text{if } j > 1 \\
+(\delta(q,(\sigma_i))_1, \textsf{READ}, (r_{\epsilon},...)), \tilde{\sigma}, \textsf{S}^k &
+\text{if } j = 1
+\end{cases}
+\end{multline*}
 
 \end{document}
