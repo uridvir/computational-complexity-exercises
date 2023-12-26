@@ -120,10 +120,19 @@ Either way, $\tilde{M}$ starts off with some setup then enters $(q_{start}, \tex
 \begin{multline*}
 \tilde{\delta}((q, \textsf{WRITE}, s, s', i), \tilde{\sigma}) = \\
 \begin{cases}
-(q, \textsf{READ}, \square^k, \textsf{inc}(i)), \tilde{\sigma}, \textsf{R} & \text{if } s = \square^k \\
-(q, \textsf{SEEK1}, [\delta(q, s')_3]_i, 0, i), [\delta(q, s')_2]_i, [\delta(q, s')_3]_i & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
+(q, \textsf{READ}, \square^k, \textsf{inc}(i)), \tilde{\sigma}, \textsf{S} & \text{if } s = \square^k \\
+(q, \textsf{SEEK}, [\delta(q, s')_3]_i, 1, s, s', i), [\delta(q, s')_2]_i, [\delta(q, s')_3]_i & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
 (q, \textsf{WRITE}, s, s', \textsf{dec}(i)), \tilde{\sigma}, \textsf{L} & \text{else if } \textsf{hat}(\tilde{\sigma}) \neq \tilde{\sigma}
 \end{cases}
 \end{multline*}
+\begin{multline*}
+\tilde{\delta}((q, \textsf{SEEK}, d, j, s, s', i), \tilde{\sigma}) = \\
+\begin{cases}
+(q, \textsf{SEEK}, d, j+\textsf{sgn}(j), s, s', i), \tilde{\sigma}, d & \text{if } j \neq k \\
+(q, \textsf{SEEK}, \textsf{reverse}(d), -1, s, s', i), \textsf{hat}(\tilde{\sigma}), \textsf{reverse}(d) & \text{if } j = k \\
+(q, \textsf{WRITE}, \textsf{insert}(s, \square, i), s', i)), \tilde{\sigma}, d & \text{if } j = -k
+\end{cases}
+\end{multline*}
+TODO: Add the copy phase, and make the Turing machine oblivious. 
 
 \end{document}
