@@ -55,51 +55,54 @@ For the multiplication function, we will have 4 work tapes. These are $\tau_x$, 
 
 %Complete the proof of Claim 1.5 by writing down explicitly the description of the
 % machine ˜M.
-To simulate $M$, the machine $\tilde{M}$ will (1) read $\log|\Gamma|$ symbols from the tapes (seeking right), (2) write $\log|\Gamma|$ symbols to the tapes (seeking left), and then (3) seek left or right by $\log|\Gamma|$ positions, or not at all, on each tape. This will take $3\log|\Gamma|$ steps, which is within $4\log|\Gamma|$ steps. After the seek phase, we go back to the read phase.
+To simulate $M$, the machine $\tilde{M}$ will (1) read $\log|\Gamma|$ symbols from the tapes (seeking right), (2) write $\log|\Gamma|$ symbols to the tapes (seeking left), and then (3) seek left or right by $\log|\Gamma|$ positions, or not at all, on each tape. After the seek phase, we go back to the read phase.
 \begin{itemize}
-\item{To read $\log|\Gamma|$ symbols, we descend down a binary tree $R$ of states. Each state $r_s$ corresponds to a prefix bit-string $s$. When we read a symbol $\tilde{\sigma} \in \{0,1\}$ in state $r_s$, we enter a new state $r_{s\tilde{\sigma}}$. Since we have $k$ tapes, we have $k$ trees represented by the product $R^k$.}
+\item{To read $\log|\Gamma|$ symbols, we have a state for every prefix bit-string. We can represent these by $S = \Cup_{i=0}^{\log|\Gamma| - 1} \tilde{\Gamma}^i$. Our states for all $k$ tapes are $S^k$.}
 \item{To write $\log|\Gamma|$ symbols to $k$ tapes, we have a sequence of states for every symbol $\sigma \in \Gamma$ we just read, represented by $\Gamma^k \times \mathbb{N}_{\log|\Gamma|}$.}
 \item{The seeking states have the same structure as those for writes, $\Gamma^k \times \mathbb{N}_{\log|\Gamma|}$.}
 \end{itemize}
-The behavior of each read, write, or seek state of $\tilde{M}$ is also determined by the active state $q$ of $M$. Therefore we can write
+The behavior of each read, write, or seek state of $\tilde{M}$ is also determined by the active state $q$ of $M$. We can write these states as
 $$
-\tilde{Q} = Q \times \left(
-(\textsf{READ}, R^k) \cup
+Q \times \left(
+(\textsf{READ}, S^k) \cup
 (\textsf{WRITE}, \Gamma^k \times \mathbb{N}_{\log|\Gamma|}) \cup
 (\textsf{SEEK}, \Gamma^k \times \mathbb{N}_{\log|\Gamma|})
 \right)
 $$
-We can now write a transition function for $\tilde{M}$. Given an encoding function $\textsf{enc} \,:\, \Gamma \rightarrow \{0,1\}^{\log|\Gamma|}$,
+We can now write a transition function for $\tilde{M}$. To represent a $\log|\Gamma|$-long sequence, we will use superscript $*$. Given an encoding function $\textsf{enc} \,:\, \Gamma \rightarrow \tilde{\Gamma}^{\log|\Gamma|}$,
 \begin{multline*}
 \tilde{\delta}
-((q, \textsf{READ}, (r_{s}, ...)), \tilde{\sigma}) = \\
+((q, \textsf{READ}, s^*), \tilde{\sigma}^*) = \\
 \begin{cases}
-(q, \textsf{READ}, (r_{s\tilde{\sigma}}, ...)), \tilde{\sigma}, \textsf{R}^k &
+(q, \textsf{READ}, s^* \tilde{\sigma}^*), \tilde{\sigma}^*, \textsf{R}^k &
 \text{if } |s\tilde{\sigma}| < \log|\Gamma| \\
-(q, \textsf{WRITE}, \textsf{enc}^{-1}((s\tilde{\sigma}, ...), \log|\Gamma|), \tilde{\sigma}, \textsf{S}^k &
+(q, \textsf{WRITE}, \textsf{enc}^{-1}(s^* \tilde{\sigma}^*), \log|\Gamma|), \tilde{\sigma}^*, \textsf{S}^k &
 \text{if } |s\tilde{\sigma}| = \log|\Gamma|
 \end{cases}
 \end{multline*}
 \begin{multline*}
 \tilde{\delta}
-((q, \textsf{WRITE}, (\sigma_i), j), \tilde{\sigma}) = \\
+((q, \textsf{WRITE}, \sigma^*, j), \tilde{\sigma}^*) = \\
 \begin{cases}
-(q, \textsf{WRITE}, (\sigma_i), j-1), \{ \textsf{enc}(\sigma')_j \,;\, \sigma' \in \delta(q,(\sigma_i))_2 \}, \textsf{L}^k &
+(q, \textsf{WRITE}, \sigma^*, j-1), \textsf{enc}(\delta(q,\sigma^*)_2)_j, \textsf{L}^k &
 \text{if } j > 1 \\
-(q, \textsf{SEEK}, (\sigma_i), \log|\Gamma|), \{ \textsf{enc}(\sigma')_1 \,;\, \sigma' \in \delta(q,(\sigma_i))_2 \}, \textsf{S}^k &
+(q, \textsf{SEEK}, \sigma^*, \log|\Gamma|), \textsf{enc}(\delta(q,\sigma^*)_2)_1, \textsf{S}^k &
 \text{if } j = 1
 \end{cases}
 \end{multline*}
-\begin{multline*}
+$$
 \tilde{\delta}
-((q, \textsf{SEEK}, (\sigma_i), j), \tilde{\sigma}) =
+((q, \textsf{SEEK}, \sigma^*, j), \tilde{\sigma}^*) =
 \begin{cases}
-(q, \textsf{SEEK}, (\sigma_i), j-1),  \tilde{\sigma}, \delta(q,(\sigma_i))_3 &
+(q, \textsf{SEEK}, \sigma^*, j-1),  \tilde{\sigma}^*, \delta(q,\sigma^*)_3 &
 \text{if } j > 1 \\
-(\delta(q,(\sigma_i))_1, \textsf{READ}, (r_{\epsilon},...)), \tilde{\sigma}, \textsf{S}^k &
+(\delta(q,\sigma^*)_1, \textsf{READ}, \epsilon^*), \tilde{\sigma}^*, \textsf{S}^k &
 \text{if } j = 1
 \end{cases}
-\end{multline*}
-TODO: Refactor $r_s$ to $s$ in the read case, and correctly handle start and halt states.
+$$
+To handle the $\square$ symbol correctly, we simply define $\textsf{enc}(\square) = \square^{\log|\Gamma|}$. I'm not sure yet how to deal with $\triangleright$: one idea is to place $\triangleright^{\log|\Gamma|}$ at the start of each tape and then use the same approach we did with $\square$. We could also implement a special case. 
+
+\noindent
+Either way, $\tilde{M}$ starts off with some setup then enters $(q_{start}, \textsf{READ}, \epsilon^*)$. We then assign $(q_{halt}, \textsf{READ}, \epsilon^*)$ as our halt state. Therefore a computation takes $3\log|\Gamma|T(n)$ plus some setup steps, which is within $4\log|\Gamma|T(n)$ steps.
 
 \end{document}
