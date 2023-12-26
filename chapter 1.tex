@@ -109,4 +109,21 @@ Either way, $\tilde{M}$ starts off with some setup then enters $(q_{start}, \tex
 
 %Complete the proof of Claim 1.6 (by explicitly defining \tilde{M}).
 
+\begin{multline*}
+\tilde{\delta}((q, \textsf{READ}, s, i), \tilde{\sigma}) = \\
+\begin{cases}
+(q, \textsf{WRITE}, s, \textsf{dehat}(s), \textsf{dec}(i), \tilde{\sigma}, \textsf{L} & \text{if } \textsf{count}(s, \square) = 0 \\
+(q, \textsf{READ}, \textsf{insert}(s,\tilde{\sigma},i), \textsf{inc}(i)), \tilde{\sigma}, \textsf{R} & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
+(q, \textsf{READ}, s, \textsf{inc}(i)), \tilde{\sigma}, \textsf{R} & \text{else if } \textsf{hat}(\tilde{\sigma}) \neq \tilde{\sigma}
+\end{cases}
+\end{multline*}
+\begin{multline*}
+\tilde{\delta}((q, \textsf{WRITE}, s, s', i), \tilde{\sigma}) = \\
+\begin{cases}
+(q, \textsf{READ}, \square^k, \textsf{inc}(i)), \tilde{\sigma}, \textsf{R} & \text{if } s = \square^k \\
+(q, \textsf{SEEK1}, [\delta(q, s')_3]_i, 0, i), [\delta(q, s')_2]_i, [\delta(q, s')_3]_i & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
+(q, \textsf{WRITE}, s, s', \textsf{dec}(i)), \tilde{\sigma}, \textsf{L} & \text{else if } \textsf{hat}(\tilde{\sigma}) \neq \tilde{\sigma}
+\end{cases}
+\end{multline*}
+
 \end{document}
