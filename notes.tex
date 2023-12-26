@@ -32,6 +32,9 @@ The TM's first tape is its input, which is read-only. Having three tapes, one fo
 \item{
 A function $T \,:\, \mathbb{N} \rightarrow \mathbb{N}$ is time-constructible if $T(n) \geq n$ and there exists a Turing machine $M$ which computes $x \rightarrow T(|x|)$ in $T$-time. Basically, is there a Turing machine which computes its own $T$-time, in $T$-time? TODO: Update this definition when I get better intuition for it.
 }
+\item{
+A Turing machine is \textit{oblivious} if its head movements only depend on the length of the input. So, for an input $x$, the location of each head on the $i$-th step is a function of $|x|$ and $i$. Every Turing machine can be simulated by an oblivious Turing machine.
+}
 \end{enumerate}
 
 \end{document}
