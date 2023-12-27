@@ -132,16 +132,16 @@ $$
 $$
 \tilde{\delta}((q, \textsf{READ2}, s, i), \tilde{\sigma}) =
 \begin{cases}
-(q, \textsf{WRITE1}, \delta(q, s), \textsf{dec}(i)), \triangleright, \textsf{L} & \text{if } i = 1 \\
+(q, \textsf{WRITE}, \delta(q, s), \textsf{dec}(i)), \triangleright, \textsf{L} & \text{if } i = 1 \\
 (q, \textsf{READ2}, s, \textsf{inc}(i)), \square, \textsf{R} & \text{if } i \neq 1 \\
 \end{cases}
 $$
 \begin{multline*}
-\tilde{\delta}((q, \textsf{WRITE}, s, s', i), \tilde{\sigma}) = \\
+\tilde{\delta}((q, \textsf{WRITE}, q', s', d, i), \tilde{\sigma}) = \\
 \begin{cases}
-(q, \textsf{READ}, \square^k, \textsf{inc}(i)), \tilde{\sigma}, \textsf{S} & \text{if } \textsf{count}(s, \square) = k \\
-(q, \textsf{SEEK}, [\delta(q, s')_3]_i, 1, s, s', i), [\delta(q, s')_2]_i, [\delta(q, s')_3]_i & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
-(q, \textsf{WRITE}, s, s', \textsf{dec}(i)), \tilde{\sigma}, \textsf{L} & \text{else if } \textsf{hat}(\tilde{\sigma}) \neq \tilde{\sigma}
+(q, \textsf{RSEEK}, q', s', d, \textsf{inc}(i)), \triangleright, \textsf{R} & \text{if } \tilde{\sigma} = \triangleright, i = k \\
+(q, \textsf{WRITE}, q', s', d, \textsf{dec}(i)), \textsf{hat}([s']_i), \textsf{L} & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
+(q, \textsf{WRITE}, q', s', d, \textsf{dec}(i)), \tilde{\sigma}, \textsf{L} & \text{else if } \textsf{hat}(\tilde{\sigma}) \neq \tilde{\sigma}
 \end{cases}
 \end{multline*}
 \begin{multline*}
