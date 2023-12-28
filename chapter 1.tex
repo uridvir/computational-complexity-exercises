@@ -109,22 +109,21 @@ Either way, $\tilde{M}$ starts off with some setup then enters $(q_{start}, \tex
 
 %Complete the proof of Claim 1.6 (by explicitly defining \tilde{M}).
 
-First, $\tilde{M}$ will copy the input into the encoded section of the tape. The tape will have the configuration $\triangleright s_{in} \triangleright s_{enc} \triangleright$. To simulate each step of $M$, we sweep right and left 4 times.
+First, $\tilde{M}$ will copy the input into the encoded section of the tape. To simulate each step of $M$, we sweep right and left 4 times.
 \begin{itemize}
 \item{Read the ``\^\, type" symbols into the registers (encode them in $Q$). Compute $\delta$ and also store this in the registers.}
 \item{Write the new symbols to the tape, in hat form to preserve position.}
 \item{Perform head adjustments for right seeks only.}
 \item{Perform head adjustments for left seeks only.}
 \end{itemize}
-To make this ``oblivious," we expand the encoded section by exactly $k$ positions every cycle. This makes the head position of $\tilde{M}$ completely predictable.
-
+To make this ``oblivious," we expand the encoded section by exactly $k$ positions every cycle. This makes the head position of $\tilde{M}$ completely predictable. The tape will have the configuration $\triangleright s_{in} \triangle \triangleright_*^k s_{enc} \triangle$. The noticeably funky start symbols ($\triangleright_*$ and $\triangle$) mean we don't have to deal with multiple $\triangleright$ symbols on the tape.
 $$
 \tilde{\delta}((q, \textsf{COPY}, ...), \tilde{\sigma}) = \,???
 $$
 \begin{multline*}
 \tilde{\delta}((q, \textsf{READ1}, s, i), \tilde{\sigma}) = \\
 \begin{cases}
-(q, \textsf{READ2}, s, \textsf{inc}(i)), \square, \textsf{R} & \text{if } \tilde{\sigma} = \triangleright, i = 1 \\
+(q, \textsf{READ2}, s, \textsf{inc}(i)), \square, \textsf{R} & \text{if } \tilde{\sigma} = \triangle, i = 1 \\
 (q, \textsf{READ1}, \textsf{insert}(s,\textsf{dehat}(\tilde{\sigma}),i), \textsf{inc}(i)), \tilde{\sigma}, \textsf{R} & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
 (q, \textsf{READ1}, s, \textsf{inc}(i)), \tilde{\sigma}, \textsf{R} & \text{else if } \textsf{hat}(\tilde{\sigma}) \neq \tilde{\sigma}
 \end{cases}
@@ -132,32 +131,34 @@ $$
 $$
 \tilde{\delta}((q, \textsf{READ2}, s, i), \tilde{\sigma}) =
 \begin{cases}
-(q, \textsf{WRITE}, \delta(q, s), \textsf{dec}(i)), \triangleright, \textsf{L} & \text{if } i = 1 \\
+(q, \textsf{WRITE}, \delta(q, s), \textsf{dec}(i)), \triangle, \textsf{L} & \text{if } i = 1 \\
 (q, \textsf{READ2}, s, \textsf{inc}(i)), \square, \textsf{R} & \text{if } i \neq 1 \\
 \end{cases}
 $$
 \begin{multline*}
 \tilde{\delta}((q, \textsf{WRITE}, q', s', d, i), \tilde{\sigma}) = \\
 \begin{cases}
-(q, \textsf{RSEEK}, q', s', d, \textsf{inc}(i)), \triangleright, \textsf{R} & \text{if } \tilde{\sigma} = \triangleright, i = k \\
+(q, \textsf{RSEEK}, q', s', d, \textsf{inc}(i)), \triangle, \textsf{R} & \text{if } \tilde{\sigma} = \triangle, i = k \\
 (q, \textsf{WRITE}, q', s', d, \textsf{dec}(i)), \textsf{hat}([s']_i), \textsf{L} & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
 (q, \textsf{WRITE}, q', s', d, \textsf{dec}(i)), \tilde{\sigma}, \textsf{L} & \text{else if } \textsf{hat}(\tilde{\sigma}) \neq \tilde{\sigma}
 \end{cases}
 \end{multline*}
-$$
-\tilde{\delta}((q, \textsf{RSEEK}, q', s', d, i), \tilde{\sigma}) = \,???
-$$
-TODO: Figure out how to deal with left shifts off the side of the tape (maybe put $\triangleright^k$ at the start).
-
-%\begin{multline*}
-%\tilde{\delta}((q, \textsf{SEEK}, d, j, s, s', i), \tilde{\sigma}) = \\
-%\begin{cases}
-%(q, \textsf{SEEK}, d, j+\textsf{sgn}(j), s, s', i), \tilde{\sigma}, d & \text{if } j \neq k \\
-%(q, \textsf{SEEK}, \textsf{reverse}(d), -1, s, s', i), \textsf{hat}(\tilde{\sigma}), \textsf{reverse}(d) & \text{if } j = k \\
-%(q, \textsf{WRITE}, \textsf{insert}(s, \square, i), s', i)), \tilde{\sigma}, d & \text{if } j = -k
-%\end{cases}
-%\end{multline*}
-\noindent
-TODO: Add the copy phase, and make the Turing machine oblivious. For copying, storing the input in $\tilde{Q}$ does not work because the input size isn't a ``compile time" constant.
+\begin{multline*}
+\tilde{\delta}((q, \textsf{RSEEK}, q', s', d, b, i), \tilde{\sigma}) = \\
+\begin{cases}
+(q, \textsf{LSEEK}, \delta', b, \textsf{dec}(i)), \triangle, \textsf{L} & \text{if } \tilde{\sigma} = \triangle, i = 1 \\
+(q, \textsf{RSEEK}, \delta', \textsf{insert}(b, 1, i), \textsf{inc}(i)), \textsf{dehat}(\tilde{\sigma}), \textsf{R} & \text{if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma}, d_i = \textsf{R} \\
+(q, \textsf{RSEEK}, \delta', \textsf{insert}(b, 0, i), \textsf{inc}(i)), \textsf{hat}(\tilde{\sigma}), \textsf{R} & \text{if } d_i = \textsf{R}, b_i = 1
+\end{cases}
+\end{multline*}
+\begin{multline*}
+\tilde{\delta}((q, \textsf{LSEEK}, q', s', d, b, i), \tilde{\sigma}) = \\
+\begin{cases}
+(q', \textsf{READ1}, \square^k, i), \triangle, \textsf{R} & \text{if } \tilde{\sigma} = \triangle, i = k \\
+(q, \textsf{LSEEK}, \delta', \textsf{insert}(b, 1, i), \textsf{dec}(i)), \textsf{dehat}(\tilde{\sigma}), \textsf{L} & \text{if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma}, d_i = \textsf{L} \\
+(q, \textsf{LSEEK}, \delta', \textsf{insert}(b, 0, i), \textsf{dec}(i)), \textsf{hat}(\tilde{\sigma}), \textsf{L} & \text{if } d_i = \textsf{L}, b_i = 1
+\end{cases}
+\end{multline*}
+TODO: Add the copy phase, and figure out how to encode the $\triangleright$ symbol.
 
 \end{document}
