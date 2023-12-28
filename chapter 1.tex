@@ -100,10 +100,18 @@ $$
 \text{if } j = 1
 \end{cases}
 $$
-To handle the $\square$ symbol correctly, we simply define $\textsf{enc}(\square) = \square^{\log|\Gamma|}$. I'm not sure yet how to deal with $\triangleright$: one idea is to place $\triangleright^{\log|\Gamma|}$ at the start of each tape and then use the same approach we did with $\square$. We could also implement a special case. 
-
-\noindent
-Either way, $\tilde{M}$ starts off with some setup then enters $(q_{start}, \textsf{READ}, \epsilon^*)$. We then assign $(q_{halt}, \textsf{READ}, \epsilon^*)$ as our halt state. Therefore a computation takes $3\log|\Gamma|T(n)$ plus some setup steps, which is within $4\log|\Gamma|T(n)$ steps.
+To handle the $\square$ symbol correctly, we simply define $\textsf{enc}(\square) = \square^{\log|\Gamma|}$. For $\triangleright$, we define some special cases:
+$$
+\forall i \ni [\tilde{\sigma}^*]_i = \triangleright 
+\,;\,
+[\tilde{\delta}((q, \textsf{READ}, s^*), \tilde{\sigma}^*)_3]_i := \textsf{S}
+$$
+$$
+\forall i, j \ni [\tilde{\sigma}^*]_i = \triangleright, j \neq \log|\Gamma| 
+\,;\,
+[\tilde{\delta}((q, \textsf{SEEK}, \sigma^*, j), \tilde{\sigma}^*)_3]_i := \textsf{S}
+$$
+The machine $\tilde{M}$ has the start state $(q_{start}, \textsf{READ}, \epsilon^*)$ and the halt state $(q_{halt}, \textsf{READ}, \epsilon^*)$. Therefore a computation takes $3\log|\Gamma|T(n) < 4\log|\Gamma|T(n)$ steps.
 
 \section*{Exercise 3}
 
