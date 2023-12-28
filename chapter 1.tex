@@ -107,9 +107,14 @@ $$
 [\tilde{\delta}((q, \textsf{READ}, s^*), \tilde{\sigma}^*)_3]_i := \textsf{S}
 $$
 $$
-\forall i, j \ni [\tilde{\sigma}^*]_i = \triangleright, j \neq \log|\Gamma| 
+\forall i, j \ni [\tilde{\sigma}^*]_i = \triangleright, j \neq 1 
 \,;\,
 [\tilde{\delta}((q, \textsf{SEEK}, \sigma^*, j), \tilde{\sigma}^*)_3]_i := \textsf{S}
+$$
+$$
+\forall i \ni [\tilde{\sigma}^*]_i = \triangleright  
+\,;\,
+[\tilde{\delta}((q, \textsf{SEEK}, \sigma^*, 1), \tilde{\sigma}^*)_3]_i := [\delta(q, \sigma^*)_3]_i
 $$
 The machine $\tilde{M}$ has the start state $(q_{start}, \textsf{READ}, \epsilon^*)$ and the halt state $(q_{halt}, \textsf{READ}, \epsilon^*)$. Therefore a computation takes $3\log|\Gamma|T(n) < 4\log|\Gamma|T(n)$ steps.
 
