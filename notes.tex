@@ -26,11 +26,15 @@ A Turing machine (TM) with $k \geq 2$ tapes is defined as a tuple $(\Gamma, Q, \
 \item{$Q$ is the set of states. There are two special states, the start state $q_{start}$ and the halt state $q_{halt}$.}
 \item{$\delta \,:\, Q \times \Gamma^k \rightarrow Q \times \Gamma^{k-1} \times \{ L, S, R \}^k$ is the transition function. The TM reads the value under each tape head and then, depending on the state, writes to the writeable tapes, and then moves each tape head left, right, or not at all. The machine ends up in a new state. The transition function $\delta$ describes precisely how the TM does this for every configuration.}
 \end{enumerate}
-The TM's first tape is its input, which is read-only. Having three tapes, one for input, one for work, and one for output, is pretty common. Additionally, seeking left past $\triangleright$ does nothing. Since the textbook doesn't specify, my interpretation of a Turing machine also has the following restrictions:
+The TM's first tape is its input, which is read-only. Having three tapes, one for input, one for work, and one for output, is pretty common.
+}
+\item{
+How does a Turing machine deal with the start symbol $\triangleright$? How exactly does it handle weird edge cases? Theses kind of minutiae are arbitrary since different variations of TMs are basically equivalent. However, it greatly simplifies my proofs if I have a consistent and rigid definition. Therefore I decree:
 \begin{itemize}
-\item{The start symbol $\triangleright$ is immutable.}
-\item{Programs cannot write $\triangleright$ past the first position. Adding a variant of $\triangleright$ (such as $\triangleleft$) to the alphabet is allowed, however.}
-\end{itemize}
+\item{The start symbol $\triangleright$ at the leftmost position is read-only. If a TM tries to write something other than $\triangleright$, this action is legal but does nothing.}
+\item{Seeking left out-of-bounds also does nothing.}
+\item{A TM is free to write and erase $\triangleright$ at other positions, \textit{at its own peril}. In principle you could design a Turing machine that forgets where the ``real" start symbol is. That is objectively a skill issue, however.}
+\end{itemize} 
 }
 \item{A TM computes a function $f$ if, given $x$ as input, it always has $f(x)$ on its output tape when it halts. It computes in $T$-time if the computation on $x$ requires at most $T(|x|)$ steps.}
 \item{
