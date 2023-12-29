@@ -129,7 +129,10 @@ First, $\tilde{M}$ will copy the input into the encoded section of the tape. To 
 \item{Perform head adjustments for right seeks only.}
 \item{Perform head adjustments for left seeks only.}
 \end{itemize}
-To make this ``oblivious," we expand the encoded section by exactly $k$ positions every cycle. This makes the head position of $\tilde{M}$ completely predictable. The tape will have the configuration $\triangleright \texttt{ input } \triangle \triangleright^k ...\, \triangle$. We use $\triangle$ to mark the ends of the encoded section for simplicity.
+To make this ``oblivious," we expand the encoded section by exactly $k$ positions every cycle. This makes the head position of $\tilde{M}$ completely predictable. The tape will have the configuration $\triangleright \texttt{ input } \triangle \triangleright^k ...\, \triangle$. We use $\triangle$ to mark the ends of the encoded section for simplicity. 
+
+\noindent
+We also define some functions. $\textsf{hat}$ and $\textsf{dehat}$ add and remove the ``hat" (\^\,) from symbols, $\textsf{insert}(s, \sigma, i)$ returns $s$ with $\sigma$ inserted at position $i$, and $\textsf{inc}$ and $\textsf{dec}$ increment and decrement $1 \leq i \leq k$ such that $\textsf{inc}(k) = 1$ and $\textsf{dec}(1) = k$.
 \begin{multline*}
 \tilde{\delta}((q, \textsf{COPY1}, \phi, i), \tilde{\sigma}) = \\
 \begin{cases}
