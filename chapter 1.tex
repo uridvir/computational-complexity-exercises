@@ -136,7 +136,7 @@ $$
 \begin{multline*}
 \tilde{\delta}((q, \textsf{READ1}, s, i), \tilde{\sigma}) = \\
 \begin{cases}
-(q, \textsf{READ2}, s, 2), \square, \textsf{R} & \text{if } \tilde{\sigma} = \triangle, i = 1 \\
+(q, \textsf{READ2}, s, 1), \square, \textsf{R} & \text{if } \tilde{\sigma} = \triangle, i = k \\
 (q, \textsf{READ1}, \textsf{insert}(s,\textsf{dehat}(\tilde{\sigma}),i), \textsf{inc}(i)), \tilde{\sigma}, \textsf{R} & \text{else if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
 (q, \textsf{READ1}, s, \textsf{inc}(i)), \tilde{\sigma}, \textsf{R} & \text{else if } \textsf{hat}(\tilde{\sigma}) \neq \tilde{\sigma}
 \end{cases}
@@ -144,8 +144,8 @@ $$
 $$
 \tilde{\delta}((q, \textsf{READ2}, s, i), \tilde{\sigma}) =
 \begin{cases}
-(q, \textsf{WRITE}, \delta(q, s), \textsf{dec}(i)), \triangle, \textsf{L} & \text{if } i = 1 \\
-(q, \textsf{READ2}, s, \textsf{inc}(i)), \square, \textsf{R} & \text{if } i \neq 1 \\
+(q, \textsf{WRITE}, \delta(q, s), k-1), \triangle, \textsf{L} & \text{if } i = k \\
+(q, \textsf{READ2}, s, \textsf{inc}(i)), \square, \textsf{R} & \text{if } i \neq k \\
 \end{cases}
 $$
 \begin{multline*}
@@ -159,7 +159,7 @@ $$
 \begin{multline*}
 \tilde{\delta}((q, \textsf{RSEEK}, q', s', d, b, i), \tilde{\sigma}) = \\
 \begin{cases}
-(q, \textsf{LSEEK}, \delta', b, k), \triangle, \textsf{L} & \text{if } \tilde{\sigma} = \triangle, i = 1 \\
+(q, \textsf{LSEEK}, \delta', b, k-1), \triangle, \textsf{L} & \text{if } \tilde{\sigma} = \triangle, i = k \\
 (q, \textsf{RSEEK}, \delta', \textsf{insert}(b, 1, i), \textsf{inc}(i)), \textsf{dehat}(\tilde{\sigma}), \textsf{R} & \text{if } \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma}, d_i = \textsf{R} \\
 (q, \textsf{RSEEK}, \delta', \textsf{insert}(b, 0, i), \textsf{inc}(i)), \textsf{hat}(\tilde{\sigma}), \textsf{R} & \text{if } d_i = \textsf{R}, b_i = 1
 \end{cases}
@@ -172,11 +172,11 @@ $$
 (q, \textsf{LSEEK}, \delta', \textsf{insert}(b, 0, i), \textsf{dec}(i)), \textsf{hat}(\tilde{\sigma}), \textsf{L} & \text{if } d_i = \textsf{L}, b_i = 1
 \end{cases}
 \end{multline*}
-Just like the last exercise, the start symbol causes us a bit of grief.  
-TODO: Add the copy phase. Place the $\triangle$ symbol in $i\neq1$.
-If $\triangle$ is in $i=1$, then at step $T(n)$ the $\triangle$ symbol will be at
+Just like the last exercise, the start symbol causes us a bit of grief. Thankfully, we only need one special case, for left seek. To prevent seeking past our emulated start symbol,
 $$
-n + 2 + k(n + 1) + kT(n) = (k + 1)n + k + 2 + kT(n) \leq (2k + 1)T(n) + (k+2)
-$$ 
+\tilde{\delta}((q, \textsf{LSEEK}, q', s', d, b, i), \textsf{hat}(\triangleright)) := (q, \textsf{LSEEK}, q', s', d, b, \textsf{dec}(i)), \textsf{hat}(\triangleright), \textsf{L}
+$$
+ 
+TODO: Add the copy phase. Place the $\triangle$ symbol in $i\neq1$.
 
 \end{document}
