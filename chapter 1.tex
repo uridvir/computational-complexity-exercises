@@ -129,10 +129,33 @@ First, $\tilde{M}$ will copy the input into the encoded section of the tape. To 
 \item{Perform head adjustments for right seeks only.}
 \item{Perform head adjustments for left seeks only.}
 \end{itemize}
-To make this ``oblivious," we expand the encoded section by exactly $k$ positions every cycle. This makes the head position of $\tilde{M}$ completely predictable. The tape will have the configuration $\triangleright s_{in} \triangle \triangleright^k s_{enc} \triangle$. We use $\triangle$ to mark the ends of the encoded section for simplicity.
-$$
-\tilde{\delta}((q, \textsf{COPY}, ...), \tilde{\sigma}) = \,???
-$$
+To make this ``oblivious," we expand the encoded section by exactly $k$ positions every cycle. This makes the head position of $\tilde{M}$ completely predictable. The tape will have the configuration $\triangleright \texttt{ input } \triangle \triangleright^k ...\, \triangle$. We use $\triangle$ to mark the ends of the encoded section for simplicity.
+\begin{multline*}
+\tilde{\delta}((q, \textsf{COPY1}, \phi, i), \tilde{\sigma}) = \\
+\begin{cases}
+(q, \textsf{COPY1}, 1, 0), \tilde{\sigma}, \textsf{R} & \text{if } \phi = 1, i = 0, \tilde{\sigma} \neq \square \\
+(q, \textsf{COPY1}, 2, 1), \triangle, \textsf{R} & \text{if } \phi = 1, i = 0, \tilde{\sigma} = \square \\
+(q, \textsf{COPY1}, 2, i+1), \textsf{hat}(\triangleright), \textsf{R} & \text{if } \phi = 2, i \neq k, \tilde{\sigma} = \square \\
+(q, \textsf{COPY1}, 3, 1), \textsf{hat}(\triangleright), \textsf{R} & \text{if } \phi = 2, i = k, \tilde{\sigma} = \square \\
+(q, \textsf{COPY1}, 3, i+1), \square, \textsf{R} & \text{if } \phi = 3, i \neq k, \tilde{\sigma} = \square \\
+(q, \textsf{COPY1}, 4, 0), \triangle, \textsf{R} & \text{if } \phi = 3, i = k, \tilde{\sigma} = \square \\
+(q, \textsf{COPY1}, 4, 0), \tilde{\sigma}, \textsf{L} & \text{if } \phi = 4, i = 0, \tilde{\sigma} \neq \triangleright \\
+(q, \textsf{COPY2}, ...), \triangleright, \textsf{R} & \text{if } \phi = 4, i = 0, \tilde{\sigma} = \triangleright
+\end{cases}
+\end{multline*}
+\begin{multline*}
+\tilde{\delta}((q, \textsf{COPY2}, \phi, i, \sigma), \tilde{\sigma}) = \\
+\begin{cases}
+(q, \textsf{COPY2}, 1, 0, \tilde{\sigma}), \textsf{hat}(\tilde{\sigma}), \textsf{R} & \text{if } \phi = 1, i = 0, \sigma = \square, \tilde{\sigma} \neq \triangle \\
+(q, \textsf{COPY2}, 1, 0, \sigma), \tilde{\sigma}, \textsf{R} & \text{if } \phi = 1, i = 0, \sigma \neq \square, \tilde{\sigma} \neq \triangle \\
+(q, \textsf{COPY2}, 2, 1, \sigma), \triangle, \textsf{R} & \text{if } \phi = 1, i = 0, \sigma \neq \square, \tilde{\sigma} = \triangle \\
+(q, \textsf{COPY2}, 2, 2, \sigma), \tilde{\sigma}, \textsf{R} & \text{if } \phi = 2, i = 1, \sigma \neq \square, \tilde{\sigma} \neq \square \\
+(q, \textsf{COPY2}, 2, \textsf{inc}(i), \sigma), \tilde{\sigma}, \textsf{R} & \text{if } \phi = 2, i \neq 1, \sigma \neq \square, \tilde{\sigma} \in \{\square, \triangle\} \\
+(q, \textsf{COPY2}, 3, 0, \square), \sigma, \textsf{L} & \text{if } \phi = 2, i = 1, \sigma \neq \square, \tilde{\sigma} = \square \\
+(q, \textsf{COPY2}, 1, 0, \square), \textsf{dehat}(\tilde{\sigma}), \textsf{R} & \text{if } \phi = 3, i = 0, \sigma = \square, \textsf{hat}(\tilde{\sigma}) = \tilde{\sigma} \\
+(q, \textsf{READ1}, \square^k, 1), \triangle, \textsf{R} & \text{if } \phi = 1, i = 0, \sigma = \square, \tilde{\sigma} = \triangle
+\end{cases}
+\end{multline*}
 \begin{multline*}
 \tilde{\delta}((q, \textsf{READ1}, s, i), \tilde{\sigma}) = \\
 \begin{cases}
@@ -176,7 +199,5 @@ Just like the last exercise, the start symbol causes us a bit of grief. Thankful
 $$
 \tilde{\delta}((q, \textsf{LSEEK}, q', s', d, b, i), \textsf{hat}(\triangleright)) := (q, \textsf{LSEEK}, q', s', d, b, \textsf{dec}(i)), \textsf{hat}(\triangleright), \textsf{L}
 $$
- 
-TODO: Add the copy phase. Place the $\triangle$ symbol in $i\neq1$.
 
 \end{document}
