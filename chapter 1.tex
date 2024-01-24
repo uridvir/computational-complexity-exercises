@@ -204,4 +204,10 @@ $$
 $$
 We have start state $(q_{start}, \textsf{COPY1}, 1, 0)$ and halt state $(q_{halt}, \textsf{READ1}, \square^k, 1)$. The copy takes $O(n^2)$ steps, and the encoded section is $k(i+1)$ wide for the $i$-th step. Therefore each sweep can take no more than $k(T(n) + 1)$ steps. Sweeping 4 times for $T(n)$ cycles gives $4k(T^2(n) + T(n)) < 5k \cdot (T(n))^2$ steps.
 
+\section*{Exercise 5}
+
+% Prove that for time-constructible T that any language L in DTIME(T) can be decided in time O(T^2) by an oblivious 2-tape TM.
+
+Since $L \in \textbf{DTIME}(T(n))$, there exists a Turing machine $M$ which decides $L$ in $O(T(n))$ time. From Claim 1.6 (which we proved in Exercise 3), we know that $M$ can be simulated by a 1-tape machine $\tilde{M}$ in $O(T^2(n))$ time.
+
 \end{document}

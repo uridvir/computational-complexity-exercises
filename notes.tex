@@ -43,6 +43,7 @@ A function $T \,:\, \mathbb{N} \rightarrow \mathbb{N}$ is time-constructible if 
 \item{
 A Turing machine is \textit{oblivious} if its head movements only depend on the length of the input. So, for an input $x$, the location of each head on the $i$-th step is a function of $|x|$ and $i$. Every Turing machine can be simulated by an oblivious Turing machine.
 }
+\item{A language $L$ is in $\textbf{DTIME}(T(n))$ iff there exists a TM which takes $O(T(n))$ time to decide $L$.}
 \end{enumerate}
 
 \end{document}
