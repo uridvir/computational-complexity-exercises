@@ -210,4 +210,10 @@ We have start state $(q_{start}, \textsf{COPY1}, 1, 0)$ and halt state $(q_{halt
 
 Since $L \in \textbf{DTIME}(T(n))$, there exists a Turing machine $M$ which decides $L$ in $O(T(n))$ time. From Claim 1.6 (which we proved in Exercise 3), we know that $M$ can be simulated by a single-tape machine $\tilde{M}$ in $O(T^2(n))$ time. Our proof for Exercise 3 constructs an oblivious TM. Furthermore, a two-tape version of $\tilde{M}$ with equal running time is trivial to construct: we can write the input to the work tape during the copy phase with no extra steps. So a two-tape oblivious machine exists which can decide $L$ in $O(T^2(n))$ time.
 
+\section*{Exercise 6}
+
+% Improve the bound of exercise 5 to O(T(n) log T(n))
+
+We know there is a machine $M$ which decides $L$ in $O(T(n))$ time but we are not guaranteed that $M$ is oblivious.
+
 \end{document}
